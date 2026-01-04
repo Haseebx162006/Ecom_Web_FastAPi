@@ -1,0 +1,52 @@
+ecom-backend/
+│
+├── app/
+│   ├── main.py                 # App entry point
+│
+│   ├── core/                   # Core configs & utilities
+│   │   ├── config.py           # Environment variables
+│   │   ├── database.py         # DB connection + session
+│   │   ├── security.py         # JWT, password hashing
+│   │   └── dependencies.py     # Common dependencies
+│
+│   ├── models/                 # SQLAlchemy models (DB tables)
+│   │   ├── user.py
+│   │   ├── product.py
+│   │   ├── order.py
+│   │   ├── cart.py
+│   │   └── __init__.py
+│
+│   ├── schemas/                # Pydantic models (Request/Response)
+│   │   ├── user.py
+│   │   ├── product.py
+│   │   ├── order.py
+│   │   ├── cart.py
+│   │   └── __init__.py
+│
+│   ├── crud/                   # DB logic (Business logic layer)
+│   │   ├── user.py
+│   │   ├── product.py
+│   │   ├── order.py
+│   │   ├── cart.py
+│   │   └── __init__.py
+│
+│   ├── api/                    # API routes
+│   │   ├── v1/
+│   │   │   ├── auth.py
+│   │   │   ├── users.py
+│   │   │   ├── products.py
+│   │   │   ├── cart.py
+│   │   │   ├── orders.py
+│   │   │   └── __init__.py
+│   │   └── __init__.py
+│
+│   └── utils/                  # Helper functions
+│       ├── pagination.py
+│       └── response.py
+│
+├── migrations/                 # Alembic migrations
+│
+├── .env                        # Secrets (ignored by git)
+├── .gitignore
+├── requirements.txt
+└── README.md
