@@ -43,3 +43,5 @@ def update_Product(db:Session, new_product: Product_Update_Schema, id: int):
 
 def get_all_products(db: Session):
     return db.query(Product).all()
+
+
