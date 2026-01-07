@@ -1,19 +1,17 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
+from datetime import datetime
 
 # Create (input from frontend)
 class UserCreateSchema(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
-    name: str = Field(..., min_length=1, max_length=100)
-    email: EmailStr 
     password: str = Field(..., min_length=6)
 
 # Read (response to frontend)
 class UserReadSchema(BaseModel):
     id: int 
     username: str
-    name: str
-    email: str
+    created_at: datetime
 
     class Config:
         from_attributes = True  

@@ -1,8 +1,9 @@
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
-pwd_context= CryptContext(schemes=["bcrypt"],deprecated="auto")
-from config import ALGORITHM , ACCESS_TOKEN_EXPIRE, SECRET_KEY
+from .config import ALGORITHM, ACCESS_TOKEN_EXPIRE, SECRET_KEY
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password, hash_password):
     return pwd_context.verify(plain_password,hash_password)

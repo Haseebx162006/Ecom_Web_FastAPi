@@ -1,11 +1,13 @@
-from fastapi import APIRouter
-from fastapi import Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from database import get_db
-from schemas.Login import UserLogin
-from CRUD.Crud import authenticate_user
-from core.security import create_access_token
+from app.schemas.Login import UserLogin
+from app.CRUD.Crud import authenticate_user
+from app.core.security import create_access_token
 from datetime import timedelta  
-router= APIRouter()
+router= APIRouter(
+    prefix="/Router/Login",
+    tags=["Login"]
+)
 
 @router.post("/login")
 def Login(user: UserLogin, db= Depends(get_db)):
