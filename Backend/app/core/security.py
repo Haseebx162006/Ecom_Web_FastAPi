@@ -5,10 +5,10 @@ pwd_context= CryptContext(schemes=["bcrypt"],deprecated="auto")
 from config import ALGORITHM , ACCESS_TOKEN_EXPIRE, SECRET_KEY
 
 def verify_password(plain_password, hash_password):
-    pwd_context.verify(plain_password,hash_password)
+    return pwd_context.verify(plain_password,hash_password)
     
 def hash_password(password: str):
-    pwd_context.hash(password)
+    return pwd_context.hash(password)
 
 
 def create_access_token(data: dict, expire_time:timedelta):

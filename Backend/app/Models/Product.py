@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, Boolean, String, DateTime, ForeignKey,Float
-from sqlalchemy.orm import Relationship
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from database import Base
 
@@ -11,7 +11,7 @@ class Product(Base):
     price = Column(Float, nullable=False)
     quantity = Column(Integer, nullable=False)
 
-    order_items = Relationship(
+    order_items = relationship(
         "OrderItem",
         back_populates="product"
     )

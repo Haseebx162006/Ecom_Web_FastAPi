@@ -2,6 +2,10 @@ from sqlalchemy.orm import Session
 from schemas.Product import Product_Create_Schema, Product_Read_Schema, Product_Update_Schema
 from Models.Product import Product
 from fastapi import HTTPException, status
+from typing import List
+from schemas.User import User_Create_Schema
+from core.security import hash_password, verify_password
+from Models.User import User
 
 
 def create_Product(db: Session, product: Product_Create_Schema):
@@ -45,3 +49,27 @@ def get_all_products(db: Session):
     return db.query(Product).all()
 
 
+
+
+def create_user(db:Session, user: User_Create_Schema):
+    hashed_pwd= hash_password(user.password)
+    
+    db_user= User(
+        email=user.email,
+        hashed_password=hashed_pwd
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
+def authenticate_user(db:Session,username:str, password:str):
+    user= db.query(User).filter(User.username==username).first()
+    if not user:
+        return None
+    if not verify_password(password, user.hashed_password):
+        return None
+    if not user.is_active:
+        return None
+    
