@@ -1,23 +1,30 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
+from typing import Optional
 
-# Create (input from frontend)
 class UserCreateSchema(BaseModel):
-    username: str = Field(..., min_length=3, max_length=50)
-    password: str = Field(..., min_length=6)
-
-# Read (response to frontend)
-class UserReadSchema(BaseModel):
-    id: int 
-    username: str
-    created_at: datetime
+    """Schema for user registration"""
+    email: EmailStr
+    password: str
 
     class Config:
-        from_attributes = True  
+        from_attributes = True
 
+class UserReadSchema(BaseModel):
+    """Schema for user response"""
+    id: int
+    email: str
+    is_active: bool
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+        
 class UserUpdateSchema(BaseModel):
-    username: Optional[str] = Field(None, min_length=3, max_length=50)
-    name: Optional[str] = Field(None, min_length=1, max_length=100)
+    """Schema for updating user"""
     email: Optional[EmailStr] = None
-    password: Optional[str] = Field(None, min_length=6)
+    password: Optional[str] = None
+    is_active: Optional[bool] = None
+
+    class Config:
+        from_attributes = True

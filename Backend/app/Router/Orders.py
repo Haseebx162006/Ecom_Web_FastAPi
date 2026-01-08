@@ -14,8 +14,13 @@ router = APIRouter(
 
 
 class OrderItemInput(BaseModel):
-    product_id: int
+    product_id: int = None
+    productId: int = None  # Support frontend format
     quantity: int = Field(gt=0)
+    
+    def get_product_id(self):
+        """Get product_id from either field"""
+        return self.product_id or self.productId
 
 
 class CreateOrderRequest(BaseModel):
@@ -29,7 +34,17 @@ def create_new_order(
     current_user: User = Depends(get_current_user)
 ):
     """Create a new order"""
-    items = [item.dict() for item in order_data.items]
+    # Convert to backend format
+    items = []
+    for item in order_data.items:
+        product_id = item.get_product_id()
+        if product_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="product_id or productId is required"
+            )
+        items.append({"product_id": product_id, "quantity": item.quantity})
+    
     return create_order(db, current_user.id, items)
 
 

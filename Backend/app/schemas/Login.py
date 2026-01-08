@@ -1,4 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+
 class UserLogin(BaseModel):
-    username: str
+    """Schema for user login"""
+    email: EmailStr
     password: str
